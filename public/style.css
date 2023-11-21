@@ -58,6 +58,7 @@ aside {
   gap: 5% 5%;
   justify-content: space-around;
   padding: 1rem;
+  overflow: auto;
 }
 aside h1 {
   grid-column-end: -1;
