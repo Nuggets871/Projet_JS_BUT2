@@ -2,6 +2,7 @@ var nbr_image = 6;
 var nbr_depot = 4;
 var asideElement = document.querySelector("aside");
 var mainElement = document.querySelector("main");
+var elementSelectionne = "";
 
 function ajout_image_aside() {
   for (let index = 1; index <= nbr_image; index++) {
@@ -25,29 +26,61 @@ function ajout_depot() {
 mainElement.addEventListener("click", depot_selectionne);
 
 function depot_selectionne(evt) {
-  console.log("test");
-  console.log("classe : " + evt.target.className);
-  // on verifie si l'element est déjà selectionné
-  if (evt.target.className == "depot selected") {
-    evt.target.classList.remove("selected"); // on lui remet son style de base si c'est le cas
+  if (elementSelectionne == "") {
+    // on verifie si l'element est déjà selectionné
+    elementSelectionne = evt.target;
+    elementSelectionne.classList.add("selected"); // sinon on lui ajoute la classe "selected" pour mettre les bordures en rouge
   } else {
-    evt.target.classList.add("selected"); // sinon on lui ajoute la classe "selected" pour mettre les bordures en rouge
+    if (evt.target.className == "depot selected") {
+      evt.target.classList.remove("selected"); // on lui remet son style de base si c'est le cas
+      elementSelectionne = None;
+    } else {
+      elementSelectionne.classList.remove("selected");
+      elementSelectionne = evt.target;
+      evt.target.classList.add("selected"); // sinon on lui ajoute la classe "selected" pour mettre les bordures en rouge
+    }
+    elementSelectionne.classList.add("selected");
   }
 }
 
 asideElement.addEventListener("click", image_selectionne);
 
 function image_selectionne(evt) {
-  console.log(evt.target.src);
   for (let index = 1; index <= nbr_depot; index++) {
     let img = document.getElementById("img" + index);
     if (img.className == "depot selected") {
-      console.log("test3");
       img.src = evt.target.src;
       img.classList.remove("selected");
     }
   }
 }
 
-ajout_image_aside();
+//ajout_image_aside();
+generer_img_pexels();
 ajout_depot();
+
+function generer_img_pexels() {
+  let key = "VMICklz95cOSs0J7HVUkVS3czRGQgsIBh9TTBJrRT7p05rbsLAAKy7Nt";
+  let query = "football";
+  const options = {
+    headers: {
+      Authorization: key,
+    },
+  };
+  var url = `https://api.pexels.com/v1/search?query=${query}&per_page=6&size=small`;
+  fetch(url, options)
+    .then((response) => response.json())
+    .then((data) => {
+      data.photos.forEach((photo) => {
+        const img = new Image();
+        img.src = photo.src.original;
+        img.width = 50;
+        img.height = 50;
+
+        asideElement.appendChild(img);
+      });
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
