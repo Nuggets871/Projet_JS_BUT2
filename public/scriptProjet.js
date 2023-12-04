@@ -55,13 +55,12 @@ function image_selectionne(evt) {
   }
 }
 
-//ajout_image_aside();
 generer_img_pexels();
 ajout_depot();
 
 function generer_img_pexels() {
-  let key = "VMICklz95cOSs0J7HVUkVS3czRGQgsIBh9TTBJrRT7p05rbsLAAKy7Nt";
-  let query = "football";
+  let key = "VMICklz95cOSs0J7HVUkVS3czRGQgsIBh9TTBJrRT7p05rbsLAAKy7Nte";
+  let query = "rabbit";
   const options = {
     headers: {
       Authorization: key,
@@ -73,7 +72,7 @@ function generer_img_pexels() {
     .then((data) => {
       data.photos.forEach((photo) => {
         const img = new Image();
-        img.src = photo.src.original;
+        img.src = photo.src.small;
         img.width = 50;
         img.height = 50;
 
@@ -81,6 +80,7 @@ function generer_img_pexels() {
       });
     })
     .catch((error) => {
+      ajout_image_aside();
       console.error("Error:", error);
     });
 }
