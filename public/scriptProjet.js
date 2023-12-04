@@ -33,7 +33,7 @@ function depot_selectionne(evt) {
   } else {
     if (evt.target.className === "depot selected") {
       evt.target.classList.remove("selected"); // on lui remet son style de base si c'est le cas
-      elementSelectionne = None;
+      elementSelectionne = "";
     } else {
       elementSelectionne.classList.remove("selected");
       elementSelectionne = evt.target;
@@ -48,7 +48,7 @@ asideElement.addEventListener("click", image_selectionne);
 function image_selectionne(evt) {
   for (let index = 1; index <= nbr_depot; index++) {
     let img = document.getElementById("img" + index);
-    if (img.className == "depot selected") {
+    if (img.className === "depot selected") {
       img.src = evt.target.src;
       img.classList.remove("selected");
     }
@@ -59,7 +59,7 @@ generer_img_pexels();
 ajout_depot();
 
 function generer_img_pexels() {
-  let key = "VMICklz95cOSs0J7HVUkVS3czRGQgsIBh9TTBJrRT7p05rbsLAAKy7Nte";
+  let key = "VMICklz95cOSs0J7HVUkVS3czRGQgsIBh9TTBJrRT7p05rbsLAAKy7Nt";
   let query = "rabbit";
   const options = {
     headers: {
@@ -71,7 +71,7 @@ function generer_img_pexels() {
     .then((response) => response.json())
     .then((data) => {
       data.photos.forEach((photo) => {
-        const img = new Image();
+        const img = document.createElement("img");
         img.src = photo.src.small;
         img.width = 50;
         img.height = 50;
