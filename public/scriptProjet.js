@@ -26,12 +26,12 @@ function ajout_depot() {
 mainElement.addEventListener("click", depot_selectionne);
 
 function depot_selectionne(evt) {
-  if (elementSelectionne == "") {
+  if (elementSelectionne === "") {
     // on verifie si l'element est déjà selectionné
     elementSelectionne = evt.target;
     elementSelectionne.classList.add("selected"); // sinon on lui ajoute la classe "selected" pour mettre les bordures en rouge
   } else {
-    if (evt.target.className == "depot selected") {
+    if (evt.target.className === "depot selected") {
       evt.target.classList.remove("selected"); // on lui remet son style de base si c'est le cas
       elementSelectionne = None;
     } else {
